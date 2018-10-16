@@ -2,7 +2,7 @@
 A script to search a repository recursively for a list of files containing a regular expression
 
 # Usage
-python githubregex.py url regex
+`python githubregex.py url regex`
 - url: a url to the repository or sub-repository to search under
 - regex: a regular expression to search the repository for
 
