@@ -23,16 +23,16 @@ def getPages(page):
     
     # Soup it!
     pageText = requests.get(page).text
-    soup = BeautifulSoup(pageText, 'lxml')
-    links = soup.findAll('tr', {'class': 'js-navigation-item'})
+    soup = BeautifulSoup(pageText, 'html.parser')
+    links = soup.findAll('div', {'class': 'js-navigation-item'})
 
     for link in links:
         try:
-            if link.td.svg['class'] == ['octicon', 'octicon-file-directory']:
-                newlink = 'https://github.com' + link.findAll('td', {'class': 'content'})[0].span.a['href']
+            if "octicon-file-directory" in link.findAll('svg')[0]['class']:
+                newlink = 'https://github.com' + link.findAll('a', {'class': 'js-navigation-open'})[0]['href']
                 getPages(newlink)
             else:
-                pages.append('https://github.com' + link.findAll('td', {'class': 'content'})[0].span.a['href'])
+                pages.append('https://github.com' + link.findAll('a', {'class': 'js-navigation-open'})[0]['href'])
                 print(" | Found {}".format(pages[-1]))
         except:
             pass
